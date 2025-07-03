@@ -2,10 +2,8 @@ package search
 
 import (
 	"fmt"
-	"math/rand"
 	"net/url"
 	"strings"
-	"time"
 )
 
 var Engines = []string{
