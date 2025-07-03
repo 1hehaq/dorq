@@ -8,6 +8,7 @@ import (
 	"regexp"
 	"strings"
 	"time"
+	"math/rand"
 )
 
 func Run(query string, engines []string, proxy string, verbose bool) {
