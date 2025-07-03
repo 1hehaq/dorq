@@ -5,7 +5,7 @@ import (
 	"flag"
 	"os"
 	"strings"
-	"time"
+
 	"github.com/1hehaq/dorq/search"
 )
 
@@ -23,7 +23,6 @@ func main() {
 	
 	for _, q := range queries {
 		search.Run(q, engines, *proxy, *verbose)
-		time.Sleep(search.RandomDelay(500, 2000))
 	}
 }
 
