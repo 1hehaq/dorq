@@ -3,6 +3,7 @@ package search
 import (
 	"fmt"
 	"math/rand"
+	"net/url"
 	"strings"
 	"time"
 )
@@ -59,12 +60,27 @@ func Colorize(name string) string {
 		return "[\033[34mG\033[31mo\033[33mo\033[34mg\033[32ml\033[31me\033[0m]"
 	case "bing":
 		return "[\033[38;5;33mbing\033[0m]"
+	case "duckduckgo":
+		return "[\033[38;5;202mduckduckgo\033[0m]"
+	case "yahoo":
+		return "[\033[38;5;129myahoo\033[0m]"
 	default:
 		return "[" + name + "]"
 	}
 }
 
-func RandomDelay(min, max int) time.Duration {
-	rand.Seed(time.Now().UnixNano())
-	return time.Duration(rand.Intn(max-min)+min) * time.Millisecond
+func BuildURL(engine, query string, page int) string {
+	escaped := url.QueryEscape(query)
+	switch {
+	case strings.Contains(engine, "google.com"):
+		return fmt.Sprintf(engine, escaped, page*100)
+	case strings.Contains(engine, "bing.com"):
+		return fmt.Sprintf(engine, escaped, page*50+1)
+	case strings.Contains(engine, "duckduckgo.com"):
+		return fmt.Sprintf(engine, escaped, page*30)
+	case strings.Contains(engine, "yahoo.com"):
+		return fmt.Sprintf(engine, escaped, page*100+1)
+	default:
+		return fmt.Sprintf(engine, escaped, page*30)
+	}
 }
